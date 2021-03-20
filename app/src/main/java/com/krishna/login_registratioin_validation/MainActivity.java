@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     TextView fname,lname,address,mobile,email,password;
     EditText searchName;
     Button search;
+    String First,Last,Email,Address,Mobile,Password;
     SharedPreferences sharedPreferences;
     public static final String fileName = "login";
     public static final String USERNAME = "t1";
@@ -81,19 +82,30 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(response);
 
-                    String First = object.getString("one");
-                    String Last = object.getString("two");
-                    String Address = object.getString("three");
-                    String Email = object.getString("four");
-                    String Mobile = object.getString("five");
-                    String Password = object.getString("six");
+                    JSONArray array = new JSONArray(response);
 
-                    fname.setText("First");
-                    lname.setText("Last");
-                    address.setText("Address");
-                    email.setText("Email");
-                    mobile.setText("Mobile");
-                    password.setText("Password");
+
+                    for (int i=0;i<array.length();i++)
+                    {
+
+                        JSONObject jsonObject = array.getJSONObject(i);
+
+                         First = jsonObject.getString("fname");
+                         Last = jsonObject.getString("lname");
+                         Address = jsonObject.getString("address");
+                         Email = jsonObject.getString("email");
+                         Mobile = jsonObject.getString("mobile");
+                         Password = jsonObject.getString("password");
+
+
+                    }
+
+                    fname.setText(First);
+                    lname.setText(Last);
+                    address.setText(Address);
+                    email.setText(Email);
+                    mobile.setText(Mobile);
+                    password.setText(Password);
 
                     int success = object.getInt("sucess");
                     if (success == 0)
