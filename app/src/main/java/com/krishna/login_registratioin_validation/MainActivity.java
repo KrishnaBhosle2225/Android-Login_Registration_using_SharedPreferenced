@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
-        sharedPreferences = getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(USERNAME)) {
-//            textView.setText("Welcome To AsciiEducation");
-            Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-        }
+//        sharedPreferences = getSharedPreferences(fileName, Context.MODE_PRIVATE);
+//        if (sharedPreferences.contains(USERNAME)) {
+////            textView.setText("Welcome To AsciiEducation");
+//            Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+//        }
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,31 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(response);
 
-                    JSONArray array = new JSONArray(response);
-
-
-                    for (int i=0;i<array.length();i++)
-                    {
-
-                        JSONObject jsonObject = array.getJSONObject(i);
-
-                         First = jsonObject.getString("fname");
-                         Last = jsonObject.getString("lname");
-                         Address = jsonObject.getString("address");
-                         Email = jsonObject.getString("email");
-                         Mobile = jsonObject.getString("mobile");
-                         Password = jsonObject.getString("password");
-
-
-                    }
-
-                    fname.setText(First);
-                    lname.setText(Last);
-                    address.setText(Address);
-                    email.setText(Email);
-                    mobile.setText(Mobile);
-                    password.setText(Password);
-
                     int success = object.getInt("sucess");
                     if (success == 0)
                     {
@@ -114,11 +89,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else if (success == 1)
                     {
+                        First = object.getString("fname");
+                        Last = object.getString("lname");
+                        Address = object.getString("address");
+                        Email = object.getString("email");
+                        Mobile = object.getString("mobile");
+                        Password = object.getString("password");
+
+                        fname.setText(First);
+                        lname.setText(Last);
+                        address.setText(Address);
+                        email.setText(Email);
+                        mobile.setText(Mobile);
+                        password.setText(Password);
                         Toast.makeText(MainActivity.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                        searchName.setText("");
                     }
                     else if (success == 2)
                     {
-                        Toast.makeText(MainActivity.this,object.getString("success"),Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,object.getString("message"),Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (Exception e)
@@ -140,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Map<String,String> map = new HashMap<String, String>();
 
-                map.put("searchName",searchName.getText().toString().trim());
-                Log.d("searchName", searchName.getText().toString().trim());
+                map.put("sName",searchName.getText().toString().trim());
+                Log.d("sName", searchName.getText().toString().trim());
 
 
                 return map;
